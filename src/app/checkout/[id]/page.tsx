@@ -40,13 +40,14 @@ export default function Checkout() {
 
     if (payment === "online") {
       const res = await onlineCheckOut(id, process.env.NEXT_PUBLIC_URL, values);
-      console.log(res);
+      console.log(process.env.NEXT_PUBLIC_URL);
+      console.log("RES", res);
 
       if (res.status === "success") {
-        console.log(res.session.url);
+        console.log("URL:", res.session.url);
         window.location.href = res.session.url;
       } else {
-        console.log(res)
+        console.log(res);
         toast.error("Something went wrong, please try again");
       }
     } else {
