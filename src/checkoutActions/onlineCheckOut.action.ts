@@ -5,13 +5,14 @@ import getMyToken from "@/utilities/getMyToken";
 
 export default async function onlineCheckOut(
   cartId: string,
-  url = process.env.NEXT_PUBLIC_URL,
+  url,
   formValues: checkoutSchemaType
 ) {
   const token = await getMyToken();
   if (!token) throw new Error("Login First");
+  const encodedUrl = encodeURIComponent(url);
   const res = await fetch(
-    `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${url}`,
+    `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${encodedUrl}`,
     {
       method: "POST",
       headers: { token, "Content-Type": "application/json" },
