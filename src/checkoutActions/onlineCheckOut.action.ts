@@ -5,7 +5,7 @@ import getMyToken from "@/utilities/getMyToken";
 
 export default async function onlineCheckOut(
   cartId: string,
-  url = process.env.NEXT_URL,
+  url = process.env.NEXT_PUBLIC_URL,
   formValues: checkoutSchemaType
 ) {
   const token = await getMyToken();
