@@ -10,9 +10,8 @@ export default async function onlineCheckOut(
 ) {
   const token = await getMyToken();
   if (!token) throw new Error("Login First");
-  const encodedUrl = encodeURIComponent(url);
   const res = await fetch(
-    `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${encodedUrl}`,
+    `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${url}`,
     {
       method: "POST",
       headers: { token, "Content-Type": "application/json" },
