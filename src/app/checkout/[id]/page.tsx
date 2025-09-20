@@ -39,7 +39,7 @@ export default function Checkout() {
     console.log(values);
 
     if (payment === "online") {
-      const res = await onlineCheckOut(id, "http://localhost:3000/", values);
+      const res = await onlineCheckOut(id, process.env.NEXT_URL, values);
       console.log(res);
 
       if (res.status === "success") {
