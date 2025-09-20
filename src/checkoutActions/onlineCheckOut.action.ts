@@ -10,7 +10,7 @@ export default async function onlineCheckOut(
 ) {
   const token = await getMyToken();
   if (!token) throw new Error("Login First");
-  let res = await fetch(
+  const res = await fetch(
     `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:3000`,
     {
       method: "POST",
@@ -19,6 +19,6 @@ export default async function onlineCheckOut(
       body: JSON.stringify({ shippingAddress: formValues }),
     }
   );
-  let payload = await res.json();
+  const payload = await res.json();
   return payload;
 }

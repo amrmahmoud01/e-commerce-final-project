@@ -14,7 +14,7 @@ export default function Details({ data }: { data: ProductType }) {
 
   async function cartAdd(productId: string) {
     try {
-      let res = await addToCart(productId);
+      const res = await addToCart(productId);
       console.log(res);
     } catch (err) {
       console.log(err);
@@ -23,12 +23,12 @@ export default function Details({ data }: { data: ProductType }) {
   }
 
   async function related() {
-    let relatedProducts = await getRelatedProducts(data.category._id);
+    const relatedProducts = await getRelatedProducts(data.category._id);
     setrelatedProducts(relatedProducts);
   }
 
   useEffect(() => {
-    let res = related();
+    const res = related();
   }, []);
   console.log("Related Products:", relatedProducts);
   return (

@@ -5,7 +5,7 @@ import SingleProduct from "../_components/SingleProduct/SingleProduct";
 import AllProducts from "../_components/AllProducts/AllProducts";
 
 export default async function Products() {
-  let data = await getProducts();
+  const data = await getProducts();
 
   return (
     <>

@@ -26,7 +26,7 @@ export default function Cart() {
   const [cartId, setcartId] = useState("");
 
   async function deleteCart() {
-    let res = await clearCart();
+    const res = await clearCart();
     setCart([]);
     settotalCartPrice(res.data.data.totalCartPrice);
     console.log(res);
@@ -35,7 +35,7 @@ export default function Cart() {
   async function updateCartItemQuantity(productId: string, count: number) {
     setbuttonLoading(true);
     setbuttonProductId(productId);
-    let res = await updateItemQuantity(productId, count);
+    const res = await updateItemQuantity(productId, count);
     console.log(res.data.data.products);
     if (res.status === 200) {
       setCart(res.data.data.products);
@@ -47,7 +47,7 @@ export default function Cart() {
 
   async function getCartItems() {
     setloading(true);
-    let res = await getCart();
+    const res = await getCart();
     settotalCartPrice(res.data.data.totalCartPrice);
     console.log(res.data.data.totalCartPrice);
     setCart(res.data.data.products);
@@ -58,7 +58,7 @@ export default function Cart() {
   async function deleteItem(productId: string) {
     setbuttonProductId(productId);
     setremoveLoading(true);
-    let res = await removeCartItem(productId);
+    const res = await removeCartItem(productId);
     console.log(res);
 
     if (res.status === 200) {

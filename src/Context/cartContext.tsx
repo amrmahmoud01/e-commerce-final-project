@@ -37,9 +37,9 @@ export default function CartContextProvider({
   const [cartNumItems, setCartNumItems] = useState(0);
 
   async function retrieveCart() {
-    let token = await getMyToken();
+    const token = await getMyToken();
     if (token) {
-      let res = await getCart();
+      const res = await getCart();
       console.log(token);
       console.log(res.data.cartId)
       setCart(res.data.data.products);

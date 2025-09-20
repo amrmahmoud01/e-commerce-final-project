@@ -12,7 +12,7 @@ export default async function categoryProducts({
 }) {
   const {id} = await params;
 
-  let data = await getCategoryProducts(id);
+  const data = await getCategoryProducts(id);
   console.log("Cat Products:", data);
   return (
     <div className=" container mx-auto w-[80%] flex flex-wrap my-12">

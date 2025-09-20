@@ -10,7 +10,7 @@ export default async function BrandProducts({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  let data = await getSpecificBrandProducts(id);
+  const data = await getSpecificBrandProducts(id);
   console.log(id);
   console.log("Brand Products:", data);
   return (

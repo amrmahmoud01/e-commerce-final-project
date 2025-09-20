@@ -1,16 +1,17 @@
 import getOrders from "@/checkoutActions/getOrders.action";
+import { Orders } from "@/types/orders.type";
 import getMyId from "@/utilities/getMyId";
 
 export default async function AllOrders() {
   async function getUserOrders() {
     const id = await getMyId();
     if (id) {
-      let res = await getOrders();
+      const res = await getOrders();
       console.log(res);
       return res.json();
     }
   }
-  let orders = await getUserOrders();
+  const orders = await getUserOrders();
   console.log(orders);
 
   return (
@@ -34,9 +35,12 @@ export default async function AllOrders() {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => {
+            {orders.map((order: Orders) => {
               return (
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                <tr
+                  key={order._id}
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200"
+                >
                   <th
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -45,7 +49,9 @@ export default async function AllOrders() {
                   </th>
                   <td className="px-6 py-4">{order.totalOrderPrice}</td>
                   <td className="px-6 py-4">{order.paymentMethodType}</td>
-                  <td className="px-6 py-4">{order.isDelivered?"YES":"NO"}</td>
+                  <td className="px-6 py-4">
+                    {order.isDelivered ? "YES" : "NO"}
+                  </td>
                 </tr>
               );
             })}

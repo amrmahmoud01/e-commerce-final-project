@@ -25,7 +25,7 @@ export default function Checkout() {
   const [loading, setLoading] = useState(false);
   const [payment, setPayment] = useState("");
 
-  let { id }: { id: string } = useParams();
+  const { id }: { id: string } = useParams();
   console.log(id);
   const form = useForm<checkoutSchemaType>({
     defaultValues: {
@@ -39,7 +39,7 @@ export default function Checkout() {
     console.log(values);
 
     if (payment === "online") {
-      let res = await onlineCheckOut(id, "http://localhost:3000/", values);
+      const res = await onlineCheckOut(id, "http://localhost:3000/", values);
       console.log(res);
 
       if (res.status === "success") {
@@ -49,7 +49,7 @@ export default function Checkout() {
         toast.error("Something went wrong, please try again");
       }
     } else {
-      let res = await createCashOrder(id, values);
+      const res = await createCashOrder(id, values);
       console.log(res);
 
       if (res.status === "success") {

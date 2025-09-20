@@ -8,8 +8,8 @@ export default async function ProductDetails({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  let { id } = await params;
-  let data = await selectedProduct(id);
+  const { id } = await params;
+  const data = await selectedProduct(id);
   console.log(data);
   return (
     <>

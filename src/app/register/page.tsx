@@ -32,7 +32,7 @@ export default function Register() {
   });
   async function onSubmit(values: registerSchemaType) {
     try {
-      let res = await axios.post(
+      const res = await axios.post(
         "https://ecommerce.routemisr.com/api/v1/auth/signup",
         values
       );
@@ -45,7 +45,7 @@ export default function Register() {
         router.push("/login");
       }
     } catch (err) {
-      let error = err as AxiosError<{ message: string }>;
+      const error = err as AxiosError<{ message: string }>;
       console.log(error.response?.data?.message);
       toast.error(error.response?.data?.message, {
         position: "top-center",

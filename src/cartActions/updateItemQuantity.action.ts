@@ -7,7 +7,7 @@ export default async function updateItemQuantity(
 ) {
   const token = await getMyToken();
 
-  let res = axios.put(
+  const res = axios.put(
     `https://ecommerce.routemisr.com/api/v1/cart/${productId}`,
     { count },
     { headers: { token } }

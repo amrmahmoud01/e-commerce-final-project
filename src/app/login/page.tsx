@@ -34,7 +34,7 @@ export default function Login() {
     setLoading(true);
     console.log("LOGGING");
     
-    let response = await signIn("credentials", {
+    const response = await signIn("credentials", {
       email: values.email,
       password: values.password,
       redirect: false,

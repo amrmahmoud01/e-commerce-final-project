@@ -9,7 +9,7 @@ import CategorySwiper from "./../CategorySwiper/CategorySwiper";
 import { CategoryType } from "@/types/category.type";
 
 export default async function CategorySlider() {
-  let data: CategoryType[] = await getAllCategories();
+  const data: CategoryType[] = await getAllCategories();
 
   return (
     <>

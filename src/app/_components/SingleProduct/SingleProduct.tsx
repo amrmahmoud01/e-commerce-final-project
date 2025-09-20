@@ -18,14 +18,14 @@ import getMyToken from "@/utilities/getMyToken";
 import { toast } from "sonner";
 
 export default function SingleProduct({ product }: { product: ProductType }) {
-  let { setCart } = useCart();
+  const { setCart } = useCart();
 
   async function cartAdd(productId: string) {
-    let token = await getMyToken();
+    const token = await getMyToken();
 
     if (token) {
       try {
-        let res = await addToCart(productId);
+        const res = await addToCart(productId);
         setCart(res.data.data.products);
       } catch (err) {
         console.log(err);

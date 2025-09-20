@@ -1,6 +1,6 @@
 export default async function getBrands() {
-  let res = await fetch(`https://ecommerce.routemisr.com/api/v1/brands`);
-  let { data } = await res.json();
+  const res = await fetch(`https://ecommerce.routemisr.com/api/v1/brands`);
+  const { data } = await res.json();
 
   return data;
 }

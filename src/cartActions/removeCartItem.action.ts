@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default async function removeCartItem(productId: string) {
   const token = await getMyToken();
-  let res = axios.delete(
+  const res = axios.delete(
     `https://ecommerce.routemisr.com/api/v1/cart/${productId}`,
     { headers: { token } }
   );
