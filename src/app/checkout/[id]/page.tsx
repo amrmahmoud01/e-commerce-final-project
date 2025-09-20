@@ -46,6 +46,7 @@ export default function Checkout() {
         console.log(res.session.url);
         window.location.href = res.session.url;
       } else {
+        console.log(res)
         toast.error("Something went wrong, please try again");
       }
     } else {
