@@ -9,7 +9,13 @@ export default function Navbar() {
   function logOut() {
     signOut({ redirect: false });
   }
-  let { cartNumItems } = useContext(CartContext);
+  let context = useContext(CartContext);
+
+  if (!context) {
+    throw new Error("Context undefined");
+  }
+
+  let { cartNumItems } = context;
   return (
     <nav className="bg-emerald-600 text-white fixed top-0 w-full z-10000">
       <div className="container w-full lg:w-[80%] mx-auto p-4 flex flex-col gap-4 lg:flex-row lg:justify-between justify-between items-center">
