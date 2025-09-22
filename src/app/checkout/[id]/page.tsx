@@ -26,7 +26,7 @@ export default function Checkout() {
   const [payment, setPayment] = useState("");
 
   const { id }: { id: string } = useParams();
-  console.log(id);
+  console.log("ID:", id);
   const form = useForm<checkoutSchemaType>({
     defaultValues: {
       details: "",
@@ -40,7 +40,9 @@ export default function Checkout() {
 
     if (payment === "online") {
       const url = process.env.NEXT_PUBLIC_URL || window.location.origin;
+
       const res = await onlineCheckOut(id, url, values);
+
       console.log(process.env.NEXT_PUBLIC_URL);
       console.log("RES", res);
 

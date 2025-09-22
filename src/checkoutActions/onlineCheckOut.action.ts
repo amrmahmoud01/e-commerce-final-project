@@ -19,6 +19,7 @@ export default async function onlineCheckOut(
       body: JSON.stringify({ shippingAddress: formValues }),
     }
   );
+  console.log("REQUEST:", res.url);
   const payload = await res.json();
   return payload;
 }
