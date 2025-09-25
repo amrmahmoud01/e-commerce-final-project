@@ -40,6 +40,7 @@ export default function Checkout() {
 
     if (payment === "online") {
       const url = process.env.NEXT_PUBLIC_URL || window.location.origin;
+      
 
       console.log("url:", url);
 
