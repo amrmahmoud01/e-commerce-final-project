@@ -1,3 +1,4 @@
+"use server";
 import { checkoutSchemaType } from "@/schema/checkout.schema";
 import getMyToken from "@/utilities/getMyToken";
 
@@ -8,14 +9,8 @@ export default async function onlineCheckOut(
 ) {
   const token = await getMyToken();
   if (!token) {
-    console.log("NO TOKEN");
     throw new Error("Login First");
   } else {
-    console.log(
-      "Final API call:",
-      `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${url}`
-    );
-    console.log("Got token:", token);
     const res = await fetch(
       `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${url}`,
       {
