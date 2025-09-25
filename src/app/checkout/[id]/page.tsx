@@ -45,6 +45,7 @@ export default function Checkout() {
 
       console.log(process.env.NEXT_PUBLIC_URL);
       console.log("RES", res);
+      console.log("URL:", res.session.url);
 
       if (res.status === "success") {
         console.log("URL:", res.session.url);
