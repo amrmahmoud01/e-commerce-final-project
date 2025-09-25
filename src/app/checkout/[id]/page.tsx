@@ -40,15 +40,12 @@ export default function Checkout() {
 
     if (payment === "online") {
       const url = process.env.NEXT_PUBLIC_URL || window.location.origin;
-      
 
       console.log("url:", url);
 
       const res = await onlineCheckOut(id, url, values);
 
-      console.log(process.env.NEXT_PUBLIC_URL);
       console.log("RES", res);
-      console.log("redirect url:", res.session.url);
 
       if (res.status === "success") {
         console.log("URL:", res.session.url);

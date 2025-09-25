@@ -9,10 +9,15 @@ export default async function onlineCheckOut(
   formValues: checkoutSchemaType
 ) {
   const token = await getMyToken();
-  const encodedUrl = encodeURIComponent(url);
   if (!token) throw new Error("Login First");
+
+  console.log(
+    "Final API call:",
+    `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${url}`
+  );
+  console.log("Got token:", token);
   const res = await fetch(
-    `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${encodedUrl}`,
+    `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${url}`,
     {
       method: "POST",
       headers: { token, "Content-Type": "application/json" },
