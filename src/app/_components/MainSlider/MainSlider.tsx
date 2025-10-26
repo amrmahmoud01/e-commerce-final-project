@@ -3,6 +3,7 @@ import React from "react";
 import img1 from "../../../../public/images/cheerful-african-american-woman-supermarket-600nw-2207384301.webp";
 import img2 from "../../../../public/images/food-2179178_1920-1-998x665.jpg";
 import img3 from "../../../../public/images/intro-1673380828.jpg";
+import img4 from "../../../../public/images/istockphoto-1452145403-612x612.jpg";
 import Image from "next/image";
 import "swiper/css/bundle";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -19,12 +20,8 @@ export default function MainSlider() {
           modules={[Autoplay]}
           autoplay={{ delay: 2000 }}
         >
-          <SwiperSlide className="w-full">
-            <Image
-              alt=""
-              src={img1}
-              className="w-full object-cover h-[400px]"
-            />
+          <SwiperSlide className=" relative w-full h-[300px] overflow-hidden">
+            <Image alt="" src={img4} className="w-full h-[400px]" />
           </SwiperSlide>
           <SwiperSlide className="w-full">
             <Image

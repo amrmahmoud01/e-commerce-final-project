@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Card,
   CardAction,
@@ -16,9 +16,22 @@ import addToCart from "@/cartActions/addToCart.action";
 import { CartContext, useCart } from "@/Context/cartContext";
 import getMyToken from "@/utilities/getMyToken";
 import { toast } from "sonner";
+import addToWishlit from "@/wishlistActions/addToWishlist";
+import getWishlist from "@/api/getWishlist.api";
+import addToWishlist from "@/wishlistActions/addToWishlist";
+import { WishlistContext } from "@/Context/wishlistContext";
+import removeItemFromWishlist from "@/wishlistActions/removeFromWishlist";
 
-export default function SingleProduct({ product }: { product: ProductType }) {
+export default function SingleProduct({
+  product,
+}: {
+  product: ProductType;
+  // wishlist: string[];
+}) {
   const { setCart } = useCart();
+  const { wishlist, setWishlist } = useContext(WishlistContext)!;
+
+  // console.log(wishlist);
 
   async function cartAdd(productId: string) {
     const token = await getMyToken();
@@ -36,11 +49,49 @@ export default function SingleProduct({ product }: { product: ProductType }) {
     }
   }
 
+  async function addItemToWishlist(id: string) {
+    console.log("PRODUCT ID ", id);
+    const res = await addToWishlist(id);
+    console.log(res);
+    if (res.status === "success") {
+      setWishlist(res.data);
+      toast.success("Product Wishlisted Successfully");
+    } else {
+      toast.error("Something wrong happened");
+    }
+  }
+
+  async function removeFromWishlist(id: string) {
+    const res = await removeItemFromWishlist(id);
+    if (res.status === "success") {
+      setWishlist(res.data);
+      toast.success("Product Removed From Wishlist Successfully");
+    } else {
+      toast.error("Something wrong happened");
+    }
+  }
+
   return (
     <>
       <div className="w-full md:w-1/2 lg:w-1/4 xl:w-1/5 " key={product.id}>
         <div className="p-5">
-          <Card className="p-2">
+          <Card className="p-2 relative">
+            {wishlist.includes(product.id) ? (
+              <i
+                className="fa-solid fa-heart absolute top-3 right-3 text-green-500 text-2xl cursor-pointer hover:scale-130 duration-100"
+                onClick={() => {
+                  removeFromWishlist(product.id);
+                }}
+              ></i>
+            ) : (
+              <i
+                className="fa-regular fa-heart absolute top-3 right-3 text-2xl cursor-pointer hover:scale-130 duration-100"
+                onClick={() => {
+                  console.log(product.id);
+                  addItemToWishlist(product.id);
+                }}
+              ></i>
+            )}
             <Link href={`/products/${product.id}`}>
               <CardHeader>
                 <CardTitle>

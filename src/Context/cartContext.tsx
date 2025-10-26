@@ -12,27 +12,23 @@ import React, {
 } from "react";
 import { CartProductType } from "@/types/cart.type";
 
-// 1. Define the context type
 type CartContextType = {
   cart: CartProductType[];
   setCart: Dispatch<SetStateAction<CartProductType[]>>;
   cartNumItems: number;
 };
 
-// 2. Create the context (can be undefined if used outside provider)
 export const CartContext = createContext<CartContextType | undefined>(
   undefined
 );
 
-// 3. Props for the provider
 type CartContextProviderProps = {
   children: ReactNode;
 };
 
-// 4. Provider component
 export default function CartContextProvider({
   children,
-}: CartContextProviderProps) {
+}: CartContextProviderProps) {  
   const [cart, setCart] = useState<CartProductType[]>([]);
   const [cartNumItems, setCartNumItems] = useState(0);
 
@@ -62,7 +58,7 @@ export default function CartContextProvider({
       {children}
     </CartContext.Provider>
   );
-}
+} 
 
 export function useCart() {
   const context = useContext(CartContext);

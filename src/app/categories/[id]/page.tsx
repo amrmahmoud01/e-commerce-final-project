@@ -15,10 +15,13 @@ export default async function categoryProducts({
   const data = await getCategoryProducts(id);
   console.log("Cat Products:", data);
   return (
+    <>
+    <title></title>
     <div className=" container mx-auto w-[80%] flex flex-wrap my-12">
       {data.map((currentProduct: ProductType) => (
         <SingleProduct product={currentProduct} key={currentProduct._id} />
       ))}
     </div>
+    </>
   );
 }

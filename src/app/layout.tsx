@@ -9,6 +9,7 @@ import MySessionProvider from "@/MySessionProvider/MySessionProvider";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import CartContextProvider from "@/Context/cartContext";
+import WishlistContextProvider from "@/Context/wishlistContext";
 config.autoAddCss = false;
 
 const geistSans = Geist({
@@ -33,15 +34,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <link
+        rel="icon"
+        href="E:\Web\Front-end Diploma\Assignments\React\E-commerce\e-commerce\public\rMXM_J0hBtPS.jpg"
+      />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <MySessionProvider>
-          <CartContextProvider>
-            <Toaster richColors />
-            <Navbar />
-            {children}
-          </CartContextProvider>
+          <WishlistContextProvider>
+            <CartContextProvider>
+              <Toaster richColors />
+              <Navbar />
+              {children}
+            </CartContextProvider>
+          </WishlistContextProvider>
         </MySessionProvider>
       </body>
     </html>
