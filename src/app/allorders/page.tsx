@@ -14,8 +14,9 @@ export default async function AllOrders() {
   const orders = await getUserOrders();
   console.log(orders);
 
+
   return (
-    <div className="mx-auto mt-50">
+    <div className="mx-auto mt-50 w-3/4">
       <div className="relative overflow-x-auto">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

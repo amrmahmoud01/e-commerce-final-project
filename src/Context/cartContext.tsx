@@ -28,20 +28,22 @@ type CartContextProviderProps = {
 
 export default function CartContextProvider({
   children,
-}: CartContextProviderProps) {  
+}: CartContextProviderProps) {
   const [cart, setCart] = useState<CartProductType[]>([]);
   const [cartNumItems, setCartNumItems] = useState(0);
 
   async function retrieveCart() {
     const token = await getMyToken();
+
     if (token) {
-      const res = await getCart();
-      console.log(token);
-      console.log(res.data.cartId)
-      setCart(res.data.data.products);
-      return res.data.data.products;
+      const data = await getCart();
+      console.log("CART:", data);
+      console.log(data);
+      setCart(data.products);
+      return data.products;
     }
   }
+  console.log("rednering cart context");
 
   useEffect(() => {
     // Recalculate items whenever cart changes
@@ -58,7 +60,7 @@ export default function CartContextProvider({
       {children}
     </CartContext.Provider>
   );
-} 
+}
 
 export function useCart() {
   const context = useContext(CartContext);

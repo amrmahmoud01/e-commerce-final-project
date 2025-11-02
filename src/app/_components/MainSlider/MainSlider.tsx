@@ -21,13 +21,21 @@ export default function MainSlider() {
           autoplay={{ delay: 2000 }}
         >
           <SwiperSlide className=" relative w-full h-[300px] overflow-hidden">
-            <Image alt="" src={img4} className="w-full h-[400px]" />
+            <Image
+              alt=""
+              width={500}
+              height={500}
+              src={img4}
+              className="w-full h-[400px]"
+            />
           </SwiperSlide>
           <SwiperSlide className="w-full">
             <Image
               alt=""
               src={img2}
               className="w-full object-cover h-[400px]"
+              width={500}
+              height={500}
             />
           </SwiperSlide>
           <SwiperSlide className="w-full">
@@ -35,13 +43,27 @@ export default function MainSlider() {
               alt=""
               src={img3}
               className="w-full object-cover h-[400px]"
+              width={500}
+              height={500}
             />
           </SwiperSlide>
         </Swiper>
       </div>
       <div className="w-1/4">
-        <Image alt="" src={img2} className="w-full object-cover h-[200px]" />
-        <Image alt="" src={img3} className="w-full object-cover h-[200px]" />
+        <Image
+          alt=""
+          src={img2}
+          className="w-full object-cover h-[200px]"
+          width={500}
+          height={500}
+        />
+        <Image
+          alt=""
+          src={img3}
+          className="w-full object-cover h-[200px]"
+          width={500}
+          height={500}
+        />
       </div>
     </div>
   );

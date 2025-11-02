@@ -28,18 +28,19 @@ export default function SingleProduct({
   product: ProductType;
   // wishlist: string[];
 }) {
-  const { setCart } = useCart();
+  const { cart, setCart } = useCart();
   const { wishlist, setWishlist } = useContext(WishlistContext)!;
 
   // console.log(wishlist);
 
   async function cartAdd(productId: string) {
     const token = await getMyToken();
-
     if (token) {
       try {
         const res = await addToCart(productId);
-        setCart(res.data.data.products);
+        setCart(res.products);
+        console.log("CART:", cart);
+        toast.success("Product added to cart successfully");
       } catch (err) {
         console.log(err);
         toast.error("Error adding item to cart please try again");
@@ -50,14 +51,20 @@ export default function SingleProduct({
   }
 
   async function addItemToWishlist(id: string) {
-    console.log("PRODUCT ID ", id);
-    const res = await addToWishlist(id);
-    console.log(res);
-    if (res.status === "success") {
-      setWishlist(res.data);
-      toast.success("Product Wishlisted Successfully");
-    } else {
-      toast.error("Something wrong happened");
+    const token = await getMyToken();
+    if(token) {
+      console.log("PRODUCT ID ", id);
+      const res = await addToWishlist(id);
+      console.log(res);
+      if (res.status === "success") {
+        setWishlist(res.data);
+        toast.success("Product Wishlisted Successfully");
+      } else {
+        toast.error("Something wrong happened");
+      }
+    }
+    else{
+      toast.error("Please Login to add to wishlist")
     }
   }
 

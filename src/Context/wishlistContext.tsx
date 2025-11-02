@@ -1,6 +1,7 @@
 "use client";
 import getWishlist from "@/api/getWishlist.api";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
+import getMyToken from "@/utilities/getMyToken";
 
 type WishlistContextProviderProps = {
   children: ReactNode;
@@ -17,14 +18,18 @@ export default function WishlistContextProvider({
   const [wishlist, setWishlist] = useState<string[]>([]);
 
   async function retrieveWishlist() {
-    const res = await getWishlist();
-    const data = res.data;
-    const ids = data.map((product: { _id: string }) => product._id);
-    setWishlist(ids);
-    console.log("IDS: ", ids);
-    return ids;
-  }
+    const token = await getMyToken();
 
+    if (token) {
+      const res = await getWishlist();
+      const data = res.data;
+      const ids = data.map((product: { _id: string }) => product._id);
+      setWishlist(ids);
+      console.log("IDS: ", ids);
+      return ids;
+    }
+  }
+  console.log("rendering wihshlist context");
   useEffect(() => {
     retrieveWishlist();
   }, []);

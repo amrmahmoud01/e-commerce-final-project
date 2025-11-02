@@ -8,7 +8,6 @@ import { CartContext, useCart } from "@/Context/cartContext";
 import { CartProductType } from "@/types/cart.type";
 import Link from "next/link";
 
-
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -30,44 +29,42 @@ export default function CartClient() {
   async function deleteCart() {
     const res = await clearCart();
     setCart([]);
-    settotalCartPrice(res.data.data.totalCartPrice);
+    settotalCartPrice(res.data.totalCartPrice);
     console.log(res);
   }
 
   async function updateCartItemQuantity(productId: string, count: number) {
     setbuttonLoading(true);
     setbuttonProductId(productId);
-    const res = await updateItemQuantity(productId, count);
-    console.log(res.data.data.products);
-    if (res.status === 200) {
-      setCart(res.data.data.products);
-      settotalCartPrice(res.data.data.totalCartPrice);
+    try {
+      const res = await updateItemQuantity(productId, count);
+      setCart(res.products);
+      settotalCartPrice(res.totalCartPrice);
+    } catch {
+      toast.error("Can't update item quanitity please try again");
     }
     setbuttonLoading(false);
-    return res;
   }
+  console.log("CART LENGTH: ", cart.length);
 
   async function getCartItems() {
     setloading(true);
     const res = await getCart();
-    settotalCartPrice(res.data.data.totalCartPrice);
-    console.log(res.data.data.totalCartPrice);
-    setCart(res.data.data.products);
-    setcartId(res.data.cartId);
+    settotalCartPrice(res.totalCartPrice);
+    setCart(res.products);
+    setcartId(res._id);
     setloading(false);
   }
 
   async function deleteItem(productId: string) {
-    setbuttonProductId(productId);
-    setremoveLoading(true);
-    const res = await removeCartItem(productId);
-    console.log(res);
-
-    if (res.status === 200) {
-      setCart(res.data.data.products);
+    try {
+      setbuttonProductId(productId);
+      setremoveLoading(true);
+      const res = await removeCartItem(productId);
+      setCart(res.products);
       toast.success("Product Removed Successfully", { position: "top-center" });
-      settotalCartPrice(res.data.data.totalCartPrice);
-    } else {
+      settotalCartPrice(res.totalCartPrice);
+    } catch {
       toast.error("Couldn't remove product please try again", {
         position: "top-center",
       });
@@ -237,8 +234,8 @@ export default function CartClient() {
           </table>
           <Link href={`/checkout/${cartId}`}>
             <Button
-              className={`mt-5 w-full cursor-pointer${
-                cart.length == 0 ? "hidden" : ""
+              className={`mt-5 w-full cursor-pointer ${
+                cart.length === 0 ? "hidden" : null
               }`}
             >
               Checkout

@@ -34,10 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <link
-        rel="icon"
-        href="E:\Web\Front-end Diploma\Assignments\React\E-commerce\e-commerce\public\rMXM_J0hBtPS.jpg"
-      />
+      <link rel="icon" href="rMXM_J0hBtPS.jpg" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

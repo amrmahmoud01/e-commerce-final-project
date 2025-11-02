@@ -20,6 +20,8 @@ export default async function brands() {
               className="rounded-t-lg h-40 object-cover w-full"
               src={brand.image}
               alt={brand.name}
+              width={500}
+              height={500}
             />
           </Link>
           <div className="p-5">

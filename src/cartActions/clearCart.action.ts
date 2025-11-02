@@ -1,3 +1,4 @@
+"use server"
 import getMyToken from "@/utilities/getMyToken";
 import axios from "axios";
 

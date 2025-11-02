@@ -2,7 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 export const config = {
-  matcher: ["/cart", "/login", "/register"],
+  matcher: ["/cart", "/login", "/register", "/resetPassword","/verifyResetCode"],
 };
 
 export async function middleware(request: NextRequest) {
@@ -19,9 +19,14 @@ export async function middleware(request: NextRequest) {
   } else {
     if (request.nextUrl.pathname === "/cart") {
       return NextResponse.redirect(new URL("/login", request.url));
+    // } else if (
+    //   request.nextUrl.pathname === "/resetPassword" ||
+    //   request.nextUrl.pathname === "/verifyResetCode"
+    // ) {
+    //   console.log("YES FORGOT PASSWORD")
+    //   return NextResponse.redirect(new URL("/forgetPassword", request.url));
     } else {
       return NextResponse.next();
     }
   }
 }
- 

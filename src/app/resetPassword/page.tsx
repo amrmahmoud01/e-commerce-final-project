@@ -1,29 +1,27 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import {
-  FormControl,
   Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { resetPassword } from "@/passwordActions/resetPassword";
 import { loginSchema, loginSchemaType } from "@/schema/login.schema";
-import { signIn } from "next-auth/react";
-import error from "./../products/error";
-import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
-export default function Login() {
+export default function ResetPassword() {
   const [loading, setLoading] = useState(false);
-
   const router = useRouter();
+
   const form = useForm<loginSchemaType>({
     defaultValues: {
       email: "",
@@ -31,35 +29,38 @@ export default function Login() {
     },
     resolver: zodResolver(loginSchema),
   });
+
   async function onSubmit(values: loginSchemaType) {
     setLoading(true);
-    console.log("LOGGING");
+    try {
+      const res = await resetPassword(values);
 
-    const response = await signIn("credentials", {
-      email: values.email,
-      password: values.password,
-      redirect: false,
-      callbackUrl: "/",
-    });
-    console.log(response);
-    if (response?.ok) {
-      setLoading(false);
-      toast.success("Login Successful", {
-        position: "top-center",
-        duration: 3000,
-      });
+      toast.success("Password reset successfully! You can now log in.");
 
-      window.location.href = "/";
-    } else {
+      // ✅ clear the verification flag once done
+      sessionStorage.removeItem("otpVerified");
+
+      router.push("/login");
+    } catch (e) {
+      toast.error("Failed to reset password. Please try again.");
+    } finally {
       setLoading(false);
-      toast.error(response?.error, { position: "top-center", duration: 3000 });
     }
   }
+
+  // ✅ Redirect if not verified
+  useEffect(() => {
+    const verified = sessionStorage.getItem("otpVerified");
+    if (!verified) {
+      router.push("/forgetPassword");
+    }
+  }, [router]);
+
   return (
     <>
-      <h1 className="text-center font-bold my-20 text-3xl">Freshcart Login</h1>
+      <h1 className="text-center font-bold my-20 text-3xl">Reset Password</h1>
 
-      <div className=" w-1/2 mx-auto">
+      <div className="w-1/2 mx-auto">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -67,7 +68,7 @@ export default function Login() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-semibold">Email: </FormLabel>
+                  <FormLabel className="font-semibold">Email:</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -81,7 +82,9 @@ export default function Login() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-semibold">Password: </FormLabel>
+                  <FormLabel className="font-semibold">
+                    New Password:
+                  </FormLabel>
                   <FormControl>
                     <Input {...field} type="password" />
                   </FormControl>
@@ -89,18 +92,13 @@ export default function Login() {
                 </FormItem>
               )}
             />
-            <p className="text-sm text-blue-400">
-              <Link href="/forgetPassword">Forgot Password?</Link>
-            </p>
 
             <Button
-              className={`w-full cursor-pointer ${
-                loading ? "disabled cursor-default" : ""
-              }`}
+              className={`w-full ${loading ? "cursor-default opacity-70" : ""}`}
               type="submit"
               disabled={loading}
             >
-              {!loading ? "Login" : "Loading..."}
+              {!loading ? "Reset Password" : "Loading..."}
             </Button>
           </form>
         </Form>

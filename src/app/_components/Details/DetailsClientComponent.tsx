@@ -7,10 +7,14 @@ import addToCart from "@/cartActions/addToCart.action";
 import { toast } from "sonner";
 import getRelatedProducts from "@/api/getRelatedProducts.api";
 import SingleProduct from "../SingleProduct/SingleProduct";
+import getMyToken from "@/utilities/getMyToken";
+import addToWishlist from "@/wishlistActions/addToWishlist";
+import { WishlistContext } from "@/Context/wishlistContext";
+import removeItemFromWishlist from "@/wishlistActions/removeFromWishlist";
 
 export default function DetailsClient({ data }: { data: ProductType }) {
-  // let { setCart } = useContext(CartContext);
   const [relatedProducts, setrelatedProducts] = useState([]);
+  const { wishlist, setWishlist } = useContext(WishlistContext);
 
   async function cartAdd(productId: string) {
     try {
@@ -19,6 +23,27 @@ export default function DetailsClient({ data }: { data: ProductType }) {
     } catch (err) {
       console.log(err);
       toast.error("Error adding item to cart please try again");
+    }
+  }
+
+  async function wishlistAdd(id: string) {
+    const token = await getMyToken();
+    if (token) {
+      const res = await addToWishlist(id);
+      setWishlist(res.data);
+      toast.success("Item added to wishlist");
+    } else {
+      toast.error("Please login first");
+    }
+  }
+  async function wishlistRemove(id: string) {
+    const token = await getMyToken();
+    if (token) {
+      const res = await removeItemFromWishlist(id);
+      setWishlist(res.data);
+      toast.success("Item removed from wishlist");
+    } else {
+      toast.error("Please login first");
     }
   }
 
@@ -59,11 +84,26 @@ export default function DetailsClient({ data }: { data: ProductType }) {
               </span>
             </div>
             <Button
-              className="cursor-pointer w-full my-2"
+              className="cursor-pointer w-full mt-2"
               onClick={() => cartAdd(data._id)}
             >
               Add to Cart
             </Button>
+            {wishlist.includes(data._id) ? (
+              <Button
+                className="cursor-pointer w-full"
+                onClick={() => wishlistRemove(data._id)}
+              >
+                Remove Item From Wishlist
+              </Button>
+            ) : (
+              <Button
+                className="cursor-pointer w-full"
+                onClick={() => wishlistAdd(data._id)}
+              >
+                Add to wishlist
+              </Button>
+            )}
           </div>
         </div>
         <h1 className="text-center w-full text-2xl mt-20 font-bold">

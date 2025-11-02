@@ -3,6 +3,7 @@ import SingleProduct from "../SingleProduct/SingleProduct";
 import { ProductType } from "@/types/product.type";
 import getWishlist from "@/api/getWishlist.api";
 
+
 export default async function AllProducts() {
 
   const data = await getProducts();

@@ -1,3 +1,4 @@
+"use server"
 import getMyToken from "@/utilities/getMyToken";
 
 export default async function addToWishlist(id: string) {

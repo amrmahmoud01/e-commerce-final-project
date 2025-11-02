@@ -1,4 +1,3 @@
-"use server";
 import getSpecificBrandProducts from "@/api/getSpecificBrandProducts.api";
 import SingleProduct from "@/app/_components/SingleProduct/SingleProduct";
 import { ProductType } from "@/types/product.type";
